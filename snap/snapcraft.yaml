@@ -1,0 +1,33 @@
+name: paradox-puppet-snap
+version: '5.3.2'
+summary: Open source configuration management tool
+description: |
+  Open source Puppet helps you describe machine configurations in a declarative
+  language, bring machines to a desired state, and keep them there through
+  automation.
+
+icon: icon.png
+
+grade: devel
+confinement: classic
+
+apps:
+  paradox-puppet-snap:
+    command: env PATH=$PATH:$SNAP/bin:$SNAP/usr/bin RUBYLIB=$SNAP/lib/ruby/2.4.0:$SNAP/lib/ruby/2.4.0/x86_64-linux GEM_PATH=$SNAP/lib/ruby/2.4.0/gems $SNAP/bin/puppet
+
+parts:
+  puppet:
+    plugin: ruby
+    ruby-version: "2.4.1"
+    gems: ['puppet']
+    stage-packages: ['python3-pip']
+    filesets:
+      everything:
+        - usr/*
+        - bin/*
+        - lib/*
+        - include/*
+    stage:
+      - $everything
+    prime:
+      - $everything
